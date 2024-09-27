@@ -17,6 +17,9 @@ app.use(express.json());
 
 app.use("/", require("./routes/root"));
 
+app.use("/cafe", require("./routes/api/cafe"));
+app.use("/employee", require("./routes/api/employee"));
+
 app.all("*", (req, res) => {
     res.status(404);
     if (req.accepts("html")) {
