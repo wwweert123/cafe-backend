@@ -1,4 +1,4 @@
-const Employee = require("../models/Employee");
+const Employee = require("../Model/Employee");
 
 // Get all employees or filter by cafe, sorted by days worked
 exports.getEmployees = async (req, res) => {

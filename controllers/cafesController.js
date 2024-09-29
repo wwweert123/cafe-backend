@@ -1,5 +1,5 @@
-const Cafe = require("../models/Cafe");
-const Employee = require("../models/Employee");
+const Cafe = require("../Model/Cafe");
+const Employee = require("../Model/Employee");
 
 // Get all cafes, or filter by location, sorted by number of employees
 exports.getCafes = async (req, res) => {
@@ -60,6 +60,8 @@ exports.updateCafe = async (req, res) => {
             req.body,
             { new: true } // Returns the updated document
         );
+
+        // TODO: need update employee cafe field (?)
 
         if (!updatedCafe) {
             return res.status(404).json({ message: "Cafe not found" });

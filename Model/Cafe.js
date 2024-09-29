@@ -28,4 +28,4 @@ const cafeSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Cafe", cafeSchema);
+module.exports = mongoose.model("Cafe", cafeSchema, "cafes");
