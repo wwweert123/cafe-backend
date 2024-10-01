@@ -7,10 +7,12 @@ exports.getEmployees = async (req, res) => {
         let employees;
         if (cafe) {
             // List employees for the specific cafe
-            employees = await Employee.find({ cafe }).lean();
+            employees = await Employee.find({ cafe })
+                .populate("cafe", "name")
+                .lean();
         } else {
             // List all employees
-            employees = await Employee.find({}).lean();
+            employees = await Employee.find({}).populate("cafe", "name").lean();
         }
 
         if (!employees.length) {
