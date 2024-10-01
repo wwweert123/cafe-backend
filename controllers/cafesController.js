@@ -1,5 +1,6 @@
 const Cafe = require("../Model/Cafe");
 const Employee = require("../Model/Employee");
+const { v4: uuidv4 } = require("uuid");
 
 // Get all cafes, or filter by location, sorted by number of employees
 exports.getCafes = async (req, res) => {
@@ -34,14 +35,14 @@ exports.getCafes = async (req, res) => {
 
 // Create a new cafe
 exports.createCafe = async (req, res) => {
-    const { name, description, logo, location, id } = req.body;
+    const { name, description, logo, location } = req.body;
     try {
         const newCafe = new Cafe({
             name,
             description,
             logo,
             location,
-            id,
+            id: uuidv4(),
         });
 
         await newCafe.save();
