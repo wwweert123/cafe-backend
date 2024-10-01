@@ -28,7 +28,6 @@ const employeeSchema = new mongoose.Schema({
     cafe: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Cafe", // References the Cafe model
-        unique: true, // Ensures that an employee can only be linked to one cafe
         required: true,
     },
     start_date: {
