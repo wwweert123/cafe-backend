@@ -37,28 +37,45 @@ exports.getEmployees = async (req, res) => {
     }
 };
 
+// Helper function to generate the employee ID in the format 'UIXXXXXXX'
+const generateEmployeeId = () => {
+    const randomString = Math.random()
+        .toString(36)
+        .substring(2, 9)
+        .toUpperCase(); // Generates 7 random alphanumeric characters
+    return `UI${randomString}`;
+};
+
 // Create a new employee
 exports.createEmployee = async (req, res) => {
-    const { id, name, email_address, phone_number, gender, cafe, start_date } =
-        req.body;
+    const { name, email_address, phone_number, gender, cafe } = req.body;
+
     try {
-        // Check if the employee already exists
-        const existingEmployee = await Employee.findOne({ id });
-        if (existingEmployee) {
-            return res.status(400).json({ message: "Employee already exists" });
+        let employeeId;
+        let isUnique = false;
+
+        // While loop to ensure we generate a unique employee ID
+        while (!isUnique) {
+            employeeId = generateEmployeeId();
+            const existingEmployee = await Employee.findOne({ id: employeeId });
+
+            if (!existingEmployee) {
+                isUnique = true; // Exit the loop when a unique ID is generated
+            }
         }
 
         // Create the new employee
         const newEmployee = new Employee({
-            id,
+            id: employeeId, // The unique employee ID generated
             name,
             email_address,
             phone_number,
             gender,
             cafe,
-            start_date,
+            start_date: new Date(), // Set current date as the start date
         });
 
+        // Save the new employee to the database
         await newEmployee.save();
         res.status(201).json(newEmployee);
     } catch (error) {
